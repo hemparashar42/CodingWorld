@@ -1,0 +1,62 @@
+// java code for trapped water problem
+//Problem Description
+//Given a vector A of non-negative integers representing an elevation map where the width of each bar is 1, compute how much water it is able to trap after raining.
+public class Solution {
+    // DO NOT MODIFY THE LIST. IT IS READ ONLY
+    public int trap(final List<Integer> A) {
+        ArrayList<Integer> prefixMax = GetPrefixSum(A);
+        ArrayList<Integer> suffixMax = GetSuffixMax(A);
+        int N = A.size();
+        int totalTrappedWater = 0;
+        int amountOfWater = 0;
+        for(int i=1; i<A.size()-1; i++)
+        {
+            amountOfWater = 0;
+            int lb = prefixMax.get(i-1);
+            int rb = suffixMax.get(i+1);
+            int yb = java.lang.Math.min(lb, rb);
+            amountOfWater = yb - A.get(i);
+            if(amountOfWater > 0)
+            {
+                totalTrappedWater += amountOfWater;
+            }
+        }
+        return totalTrappedWater;
+    }
+    public static ArrayList<Integer> GetSuffixMax(List<Integer> A)
+    {
+        ArrayList<Integer> suffixMax = new ArrayList<Integer>();
+        for(int i=0; i<A.size(); i++)
+        {
+            suffixMax.add(0);
+        }
+        for(int i=A.size()-1; i>=0; i--)
+        {
+            if(A.size()-1 == i)
+            {
+                suffixMax.set(i, A.get(i));
+            }
+            else
+            {
+                suffixMax.set(i, java.lang.Math.max(A.get(i), suffixMax.get(i+1)));
+            }
+        }
+        return suffixMax;
+    }
+    public static ArrayList<Integer> GetPrefixSum(List<Integer> A)
+    {
+        ArrayList<Integer> pMax = new ArrayList<Integer>();
+        for(int i=0; i<A.size(); i++)
+        {
+            if(i==0)
+            {
+                pMax.add(A.get(i));
+            }
+            else
+            {
+                pMax.add(java.lang.Math.max(pMax.get(i-1), A.get(i)));
+            }
+        }
+        return pMax;
+    }
+}
