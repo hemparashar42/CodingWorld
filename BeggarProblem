@@ -1,0 +1,67 @@
+//There are A beggars sitting in a row outside a temple. Each beggar initially has an empty pot. When the devotees come to the temple, they donate some amount of coins to these beggars. Each devotee gives a fixed amount of coin(according to their faith and ability) to some K beggars sitting next to each other.
+
+//Given the amount P donated by each devotee to the beggars ranging from L to R index, where 1 <= L <= R <= A, find out the final amount of money in each beggar's pot at the end of the day, provided they don't fill their pots by any other means.
+//For ith devotee B[i][0] = L, B[i][1] = R, B[i][2] = P, Given by the 2D array B
+
+
+//Problem Constraints
+//1 <= A <= 2 * 105
+//1 <= L <= R <= A
+//1 <= P <= 103
+//0 <= len(B) <= 105
+
+
+//Input Format
+//The first argument is a single integer A.
+//The second argument is a 2D integer array B.
+
+
+//Output Format
+//Return an array(0 based indexing) that stores the total number of coins in each beggars pot.
+
+
+//Example Input
+//Input 1:-
+//A = 5
+//B = [[1, 2, 10], [2, 3, 20], [2, 5, 25]]
+
+
+//Example Output
+//Output 1:-
+//10 55 45 25 25
+
+Solution: O(N)
+//considering theoriginal array of pots of beggars to be empty means all elements 0, this problem can be solved by adding B[i][2] to Lth element and -B[i][2] to Rth element 
+// provided R<A
+// And then calculating prefixSum which is the result.
+public class Solution {
+    public ArrayList<Integer> solve(int A, ArrayList<ArrayList<Integer>> B) {
+        int L = 0;
+        int R = 0;
+        ArrayList<Integer> coins = new ArrayList<Integer>();
+
+        for(int i=0; i< A; i++)
+        {
+            coins.add(0);
+        }
+        for(int k=0; k<B.size(); k++)
+        {
+            L = B.get(k).get(0)-1;
+            coins.set(L, B.get(k).get(2) + coins.get(L));
+            R = B.get(k).get(1);
+            if(R<A)
+                coins.set(R, -1* (B.get(k).get(2)) + coins.get(R));
+        }
+        ArrayList<Integer> prefixCoins = new ArrayList<Integer>();
+        for(int k=0; k<A; k++)
+        {
+            if(k==0)
+                prefixCoins.add(coins.get(0));
+            else
+            {
+                prefixCoins.add(prefixCoins.get(k-1)+ coins.get(k));
+            }
+        }
+        return prefixCoins;
+    }
+}
