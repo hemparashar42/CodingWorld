@@ -1,0 +1,25 @@
+//replace A[i] with A[A[i]] in SC O(1)
+public class Solution {
+	public void arrange(ArrayList<Integer> a) {
+        int N=a.size();
+        // multiply the whole array by N (highest index +1)
+        for(int i=0; i<N; i++)
+        {
+            a.set(i, a.get(i)*N);
+        }
+        // finding the new val  and setting the hashed value in array[i]
+
+        for(int i=0; i<N; i++)
+        {
+            int nextValidIdx = a.get(i)/N;
+            int newVal = a.get(nextValidIdx)/N;
+            a.set(i, a.get(i) +newVal); 
+        }
+        // extract the new value
+        for(int i=0; i<N; i++)
+        {
+            a.set(i, a.get(i)%N);
+        }
+
+	}
+}
