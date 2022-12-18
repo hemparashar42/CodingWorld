@@ -1,0 +1,38 @@
+Problem Description
+You are given an integer A. You need to print all the Armstrong Numbers between 1 to A.
+
+If sum of cubes of each digit of the number is equal to the number itself, then the number is called an Armstrong number.
+
+For example, 153 = ( 1 * 1 * 1 ) + ( 5 * 5 * 5 ) + ( 3 * 3 * 3 ).
+
+
+
+Problem Constraints
+1 <= N <= 500
+
+
+Ans:
+public class Solution {
+    public ArrayList<Integer> solve(int A) {
+        ArrayList<Integer> Armstrongs = new ArrayList<Integer>();
+        for(int i=1; i<A; i++)
+        {
+            String str = new String() + i;
+            int numOfDigits = str.length();
+            int sumOfCubes = 0;
+            for(int k=0; k<numOfDigits; k++)
+            {
+                int a = str.charAt(k) - '0';
+                sumOfCubes+=(a*a*a);
+            }
+            if(sumOfCubes == i)
+            {
+                // print Armstrong number
+                //System.out.println(i);
+                Armstrongs.add(i);
+            }    
+
+        }
+        return Armstrongs;
+    }
+}
