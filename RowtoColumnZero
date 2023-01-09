@@ -43,9 +43,9 @@ public class Solution {
     public ArrayList<ArrayList<Integer>> solve(ArrayList<ArrayList<Integer>> A) {
         int NRow = A.size();
         int NCol = A.get(0).size();
-        int zeroCol=-1;
+        
         ArrayList<ArrayList<Integer>> indexMatrix2D = new ArrayList<ArrayList<Integer>>();
-        ArrayList<ArrayList<Integer>> C = new ArrayList<ArrayList<Integer>>();
+        
         for(int r = 0; r<NRow; r++)
         {
             
