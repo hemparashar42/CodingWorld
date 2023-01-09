@@ -1,0 +1,80 @@
+Problem Description
+Given an array of size N, find the subarray of size K with the least average.
+
+
+
+Problem Constraints
+1<=k<=N<=1e5
+-1e5<=A[i]<=1e5
+
+
+Input Format
+First argument contains an array A of integers of size N.
+Second argument contains integer k.
+
+
+Output Format
+Return the index of the first element of the subarray of size k that has least average.
+Array indexing starts from 0.
+
+
+Example Input
+Input 1:
+A=[3, 7, 90, 20, 10, 50, 40]
+B=3
+Input 2:
+
+A=[3, 7, 5, 20, -10, 0, 12]
+B=2
+
+
+Example Output
+Output 1:
+3
+Output 2:
+
+4
+
+Note: The starting index of the subarray with least avg and given length needs to be returned. 
+
+public class Solution {
+    public int solve(ArrayList<Integer> A, int B) {
+        int index=0;
+        ArrayList<Integer> P = new ArrayList<Integer>();
+        // calculate prefixSum
+        for(int i=0; i < A.size(); i++)
+        {
+            if(i==0)
+                P.add(A.get(i));
+            else
+                P.add(P.get(i-1)+A.get(i));
+        }
+        
+        double avg=0.0;
+        // sliding window
+        //System.out.println();
+        
+        for(int r=0; r <= (A.size()-B); r++)
+        {
+            if(r==0)
+            {
+                avg = ((double)P.get(B-1))/B;
+                //System.out.println("r:" + r + "avg: " + avg);
+            }
+            else
+            {
+                int sum = P.get(r+B-1)-P.get(r-1);
+                //System.out.println("r:" + r)
+                if(avg*B > sum)
+                {
+                    avg = ((double)sum)/B;
+                    index = r;
+                    //System.out.println("r:" + r + "avg: " + avg + "sum: " + sum);
+                }
+                
+            }
+            //System.out.println("r:" + r + "avg: " + avg );
+        }
+        return index;
+    }
+}
